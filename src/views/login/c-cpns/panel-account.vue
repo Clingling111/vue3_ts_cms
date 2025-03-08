@@ -77,7 +77,6 @@ function loginAction(isRemPwd: boolean) {
           localStorage.removeItem('password')
         }
       })
-      console.log('验证成功!')
     } else {
       ElMessage({
         message: '请输入正确的帐号和密码!',

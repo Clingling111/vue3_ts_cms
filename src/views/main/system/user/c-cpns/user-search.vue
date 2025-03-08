@@ -1,11 +1,6 @@
 <template>
   <div class="search">
-    <el-form
-      :model="searchForm"
-      ref="searchFormRef"
-      abel-width="80px"
-      size="large"
-    >
+    <el-form :model="searchForm" ref="searchFormRef" size="large">
       <el-row :gutter="20">
         <el-col :span="8">
           <el-form-item label="用户名" prop="name">

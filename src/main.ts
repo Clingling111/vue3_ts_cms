@@ -7,9 +7,11 @@ import 'element-plus/dist/index.css'
 // 全局注册elementplus的图标
 import registerIcons from './global/register-icons'
 import store from './store'
+import '@vueup/vue-quill/dist/vue-quill.snow.css'
 
 const app = createApp(App)
 app.use(registerIcons)
 app.use(store)
 app.use(router)
+
 app.mount('#app')

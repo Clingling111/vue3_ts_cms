@@ -10,6 +10,7 @@ import {
 } from '@/service/main/system/system'
 import { defineStore } from 'pinia'
 import { useMainStore } from '../main'
+import { ElMessage } from 'element-plus'
 
 interface ISystemState {
   usersList: any[]
@@ -49,11 +50,15 @@ const useSystemStore = defineStore('system', {
     async postPageListAction(pageName: string, queryInfo?: any) {
       const res = await postPageListData(pageName, queryInfo)
       const { list, totalCount } = res.data
+
       this.pageList = list
       this.pageListTotalCount = totalCount
     },
     async deletePageDataAction(pageName: string, id: number) {
-      await deletePageData(pageName, id)
+      const res = await deletePageData(pageName, id)
+      if (res.code !== 200) {
+        ElMessage(res.data)
+      }
       this.postPageListAction(pageName, { offset: 0, size: 10 })
 
       // 获取完整的数据
@@ -73,7 +78,10 @@ const useSystemStore = defineStore('system', {
       mainStore.fetchMenuList()
     },
     async editPageInfoAction(pageName: string, id: number, pageInfo: any) {
-      await editPageData(pageName, id, pageInfo)
+      const res = await editPageData(pageName, id, pageInfo)
+      if (res.code !== 200) {
+        ElMessage(res.data)
+      }
       this.postPageListAction(pageName, { offset: 0, size: 10 })
 
       // 获取完整的数据

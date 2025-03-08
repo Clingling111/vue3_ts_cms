@@ -1,6 +1,10 @@
 import { firstMenu } from '@/utlis/mapMenuToRoute'
 import { createRouter, createWebHashHistory } from 'vue-router'
 
+// 导入导航进度插件
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
+
 const router = createRouter({
   routes: [
     { path: '/', redirect: '/main' },
@@ -24,11 +28,18 @@ const router = createRouter({
 // return "/login"  跳转到login页面
 router.beforeEach((to) => {
   const token = localStorage.getItem('token')
-  if (to.path === '/main' && !token) {
+  if (to.path.includes('/main') && !token) {
     return '/login'
   }
 
   if (to.path === '/main') return firstMenu.url
+  // 开启进度
+  NProgress.start()
+})
+
+router.afterEach(() => {
+  // 结束进度
+  NProgress.done()
 })
 
 export default router

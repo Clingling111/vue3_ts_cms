@@ -1,9 +1,30 @@
 <template>
-  <div>
-    <h2>chat</h2>
+  <div class="editorWrapper">
+    <QuillEditor theme="snow" :options="options" />
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { QuillEditor } from '@vueup/vue-quill'
+import { reactive } from 'vue'
 
-<style lang="less" scoped></style>
+const options = reactive({
+  debug: 'info',
+  modules: {
+    toolbar: ['bold', 'italic', 'underline']
+  },
+  placeholder: 'Compose an epic...',
+  readOnly: false,
+  theme: 'snow'
+})
+</script>
+
+<style lang="less" scoped>
+.editorWrapper {
+  background: #fff;
+
+  :deep(.ql-container) {
+    height: 500px;
+  }
+}
+</style>

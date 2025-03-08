@@ -38,6 +38,33 @@
                   />
                 </el-select>
               </template>
+              <template v-else-if="item.type === 'upload'">
+                <el-upload
+                  v-model:file-list="fileList"
+                  class="upload-demo"
+                  action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15"
+                  multiple
+                  :on-preview="handlePreview"
+                  :on-remove="handleRemove"
+                  :before-remove="beforeRemove"
+                  :limit="3"
+                  :on-exceed="handleExceed"
+                >
+                  <el-button type="primary">Click to upload</el-button>
+                  <template #tip>
+                    <div class="el-upload__tip">
+                      jpg/png files with a size less than 500KB.
+                    </div>
+                  </template>
+                </el-upload>
+              </template>
+              <template v-else-if="item.type === 'image'">
+                <img
+                  src="https://s11.mogucdn.com/mlcdn/17f85e/180927_5i77e04lhaalbg3dai0j4588lbahh_640x960.jpg_560x999.jpg"
+                  alt=""
+                  style="width: 55px; height: 55px"
+                />
+              </template>
               <template v-if="item.type === 'custom'">
                 <slot :name="item.slotName"></slot>
               </template>
@@ -61,6 +88,37 @@
 import { reactive, ref } from 'vue'
 import type { ElForm } from 'element-plus'
 import useSystemStore from '@/store/main/system/system'
+import type { UploadProps, UploadUserFile } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
+// upload
+const fileList = ref<UploadUserFile[]>([])
+
+const handleRemove: UploadProps['onRemove'] = (file, uploadFiles) => {
+  console.log(file, uploadFiles)
+}
+
+const handlePreview: UploadProps['onPreview'] = (uploadFile) => {
+  console.log(uploadFile)
+}
+
+const handleExceed: UploadProps['onExceed'] = (files, uploadFiles) => {
+  ElMessage.warning(
+    `The limit is 3, you selected ${files.length} files this time, add up to ${
+      files.length + uploadFiles.length
+    } totally`
+  )
+}
+
+const beforeRemove: UploadProps['beforeRemove'] = (uploadFile) => {
+  return ElMessageBox.confirm(
+    `Cancel the transfer of ${uploadFile.name} ?`
+  ).then(
+    () => true,
+    () => false
+  )
+}
+
+// end
 
 interface IProps {
   modalConfig: {
@@ -105,15 +163,22 @@ const formRef = ref<InstanceType<typeof ElForm>>()
 // 创建部门
 const systemStore = useSystemStore()
 const handleCreateUserClick = () => {
-  let infoData = formData
+  let infoData: any = {}
+  for (const key in formData) {
+    infoData[key] = formData[key]
+  }
+
   if (props.otherInfo) {
     infoData = { ...infoData, ...props.otherInfo }
   }
   if (isNewRef.value) {
+    console.log(formData)
+
     systemStore.createPageDataAction(props.modalConfig.pageName, infoData)
     dialogVisible.value = false
     formRef.value?.resetFields()
   } else {
+    console.log(infoData)
     systemStore.editPageInfoAction(
       props.modalConfig.pageName,
       editId.value,

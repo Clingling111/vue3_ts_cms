@@ -1,7 +1,9 @@
 import myRequest from '..'
-import type { IAccount } from '@/views/login/types'
+import type { IAccount } from '@/types'
+// import { localCache } from '@/utils/cache'
+// import { LOGIN_TOKEN } from '@/global/constants'
 
-export function accountLogin(account: IAccount) {
+export function accountLoginRequest(account: IAccount) {
   return myRequest.post({
     url: '/login',
     data: account
@@ -10,15 +12,14 @@ export function accountLogin(account: IAccount) {
 
 export function getUserInfoById(id: number) {
   return myRequest.get({
-    url: '/users/' + id
+    url: `/users/${id}`
     // headers: {
-    //   Authorization: localStorage.getItem('token')
+    //   Authorization: 'Bearer ' + localCache.getCache(LOGIN_TOKEN)
     // }
   })
 }
 
-// 根据用户角色id查询菜单树
-export function getMenuListByRoleId(id: number) {
+export function getUserMenusByRoleId(id: number) {
   return myRequest.get({
     url: `/role/${id}/menu`
   })

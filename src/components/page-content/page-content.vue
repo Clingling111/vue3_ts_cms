@@ -7,16 +7,40 @@
       }}</el-button>
     </div>
     <div class="table">
-      <el-table :data="pageList" border style="width: 100%" row-key="id">
+      <el-table
+        :data="pageList"
+        border
+        style="width: 100%"
+        row-key="id"
+        :scrollbar-always-on="true"
+        :show-overflow-tooltip="true"
+      >
         <template v-for="item in contentConfig.propList" :key="item.prop">
           <template v-if="item.type === 'timer'">
             <el-table-column
               align="center"
               :label="item.label"
               :prop="item.prop"
+              :width="item.width"
             >
               <template #default="scope">
                 {{ formatUTC(scope.row[item.prop]) }}
+              </template>
+            </el-table-column>
+          </template>
+          <template v-else-if="item.type === 'image'">
+            <el-table-column
+              align="center"
+              :label="item.label"
+              :prop="item.prop"
+              :width="item.width"
+            >
+              <template #default="scope">
+                <img
+                  :src="scope.row.imgUrl"
+                  alt=""
+                  style="width: 55px; height: 55px"
+                />
               </template>
             </el-table-column>
           </template>
@@ -24,6 +48,8 @@
             <el-table-column
               :label="item.label"
               align="center"
+              fixed="right"
+              :width="item.width"
               v-if="isUpdate && isDelete"
             >
               <template #default="scope">
@@ -181,6 +207,16 @@ defineExpose({ fetchPageListData })
 
     .title {
       font-size: 22px;
+    }
+  }
+
+  .table {
+    overflow-x: auto; /* 启用横向滚动 */
+    max-width: 100%; /* 确保容器宽度自适应 */
+
+    .el-table {
+      overflow-x: auto;
+      display: block;
     }
   }
 

@@ -3,7 +3,7 @@
     <el-form
       :model="searchForm"
       ref="searchFormRef"
-      abel-width="80px"
+      label-width="80px"
       size="large"
     >
       <el-row :gutter="20">
@@ -69,11 +69,11 @@ for (const item of props.searchConfig.formItem) {
   initalForm[item.prop] = ''
 }
 
-// 判断用户是否有搜索权限
-const isQuery = usePagePermission(`${props.searchConfig.pageName}`)
-
 const searchForm = reactive(initalForm)
 const searchFormRef = ref<InstanceType<typeof ElForm>>()
+
+// 判断用户是否有搜索权限
+const isQuery = usePagePermission(`${props.searchConfig.pageName}`)
 
 const handelRestClick = () => {
   searchFormRef.value?.resetFields()

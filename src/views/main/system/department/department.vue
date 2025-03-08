@@ -40,7 +40,6 @@ const modalConfigRef = computed(() => {
 
   return modalConfig
 })
-console.log(modalConfig.formItem)
 
 const { contentRef, handelQueryClick, handelResetClick } = usePageContent()
 const { modalRef, handelNewClick, handelEditClick } = usePageModal()

@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import {
-  accountLogin,
-  getMenuListByRoleId,
+  accountLoginRequest,
+  getUserMenusByRoleId,
   getUserInfoById
 } from '@/service/login/login'
 import {
@@ -29,7 +29,7 @@ export const useLoginStore = defineStore('login', {
   actions: {
     async accountLoginAction(account: IAccount) {
       // 1.获取token
-      const res = await accountLogin(account)
+      const res = await accountLoginRequest(account)
       const id = res.data.id
       this.token = res.data.token
 
@@ -41,7 +41,9 @@ export const useLoginStore = defineStore('login', {
       this.userInfo = userInfoRes.data
 
       // 4.根据角色请求用户的权限(菜单menus)
-      const menuListRes = await getMenuListByRoleId(this.userInfo.role.id)
+      const menuListRes = await getUserMenusByRoleId(this.userInfo.role.id)
+      console.log(menuListRes)
+
       const useMenus = menuListRes.data
       this.userMenus = useMenus
 
@@ -63,7 +65,6 @@ export const useLoginStore = defineStore('login', {
 
       //7.获取用户的按钮权限
       const permission = mapMenuslistToPermission(useMenus)
-
       this.permission = permission
 
       // 跳转到首页

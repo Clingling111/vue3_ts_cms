@@ -13,6 +13,8 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@types/nprogress": "^0.2.3",
+    "@vueup/vue-quill": "^1.2.0",
     "axios": "^1.7.2",
     "countup.js": "^2.8.0",
     "dayjs": "^1.11.12",
@@ -21,6 +23,7 @@
     "husky": "^9.1.4",
     "less": "^4.2.0",
     "normalize.css": "^8.0.1",
+    "nprogress": "^0.2.0",
     "pinia": "^2.2.0",
     "vue": "^3.4.29",
     "vue-router": "^4.4.2"

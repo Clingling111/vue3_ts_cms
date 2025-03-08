@@ -1,7 +1,7 @@
 import axios from 'axios'
 import type { AxiosInstance, AxiosRequestConfig } from 'axios'
-
 import type { MYRequestConfig } from './type'
+import { ElMessage } from 'element-plus'
 
 // 针对AxiosRequestConfig配置进行扩展
 // interface MYInterceptors {
@@ -39,10 +39,18 @@ class MYRequest {
     this.instance.interceptors.response.use(
       (res) => {
         // console.log('全局响应成功的拦截')
-        return res.data
+        if (res.data.code === 0) {
+          return res.data
+        } else {
+          ElMessage({
+            type: 'error',
+            message: 'error'
+          })
+        }
       },
       (err) => {
         // console.log('全局响应失败的拦截')
+        ElMessage(err)
         return err
       }
     )

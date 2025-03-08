@@ -8,6 +8,7 @@ import 'element-plus/dist/index.css'
 import registerIcons from './global/register-icons'
 import store from './store'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
+import 'animate.css'
 
 const app = createApp(App)
 app.use(registerIcons)

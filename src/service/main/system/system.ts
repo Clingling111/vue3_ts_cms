@@ -57,3 +57,10 @@ export function editPageData(pageName: string, id: number, pageInfo: any) {
     data: pageInfo
   })
 }
+
+// 获取故事列表
+export function getStoryList() {
+  return myRequest.post({
+    url: '/story/list'
+  })
+}

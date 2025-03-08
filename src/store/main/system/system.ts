@@ -6,25 +6,28 @@ import {
   postPageListData,
   deletePageData,
   createPageData,
-  editPageData
+  editPageData,
+  getStoryList
 } from '@/service/main/system/system'
 import { defineStore } from 'pinia'
 import { useMainStore } from '../main'
 import { ElMessage } from 'element-plus'
+import type { storyItem } from '@/types'
 
 interface ISystemState {
   usersList: any[]
   usersListTotalCount: number
   pageList: any[]
   pageListTotalCount: number
+  storyList: storyItem[]
 }
 const useSystemStore = defineStore('system', {
   state: (): ISystemState => ({
     usersList: [],
     usersListTotalCount: 0,
-
     pageList: [],
-    pageListTotalCount: 0
+    pageListTotalCount: 0,
+    storyList: []
   }),
 
   actions: {
@@ -89,6 +92,12 @@ const useSystemStore = defineStore('system', {
       mainStore.fetchRoleList()
       mainStore.fetchDepartmentList()
       mainStore.fetchMenuList()
+    },
+
+    async getStoryListAction() {
+      const res = await getStoryList()
+      this.storyList = res.data.list
+      console.log(this.storyList)
     }
   }
 })

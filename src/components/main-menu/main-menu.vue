@@ -58,14 +58,14 @@ const hanleMenuItemClick = (item: any) => {
 //ElMenu的默认菜单
 const route = useRoute()
 let pathMenu = mapPathToMenu(route.path, userMenus)
-let defaultActive = ref<string>(pathMenu.id + '')
+let defaultActive = ref<string>(pathMenu?.id + '')
 
 // 监听路由路径的变化,实时绑定菜单与路由的关系
 watch(
   () => route.path,
   (newVal) => {
     pathMenu = mapPathToMenu(newVal, userMenus)
-    defaultActive.value = pathMenu.id + ''
+    defaultActive.value = pathMenu?.id + ''
   }
 )
 </script>

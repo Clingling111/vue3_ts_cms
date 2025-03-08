@@ -1,6 +1,6 @@
 <template>
   <div class="editorWrapper">
-    <QuillEditor theme="snow" :options="options" />
+    <QuillEditor :options="options" />
   </div>
 </template>
 

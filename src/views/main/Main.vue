@@ -4,7 +4,6 @@
       <el-aside :width="!isCollapse ? '210px' : '60px'">
         <main-menu :isFold="isCollapse" />
       </el-aside>
-      <!-- <button @click="logout">退出登录</button> -->
       <el-container>
         <el-header height="50px">
           <main-header @change-is-fold-event="changeIsFold" />
